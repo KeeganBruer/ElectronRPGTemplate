@@ -38,6 +38,10 @@ jobs:
           - Second Change
         draft: false
         prerelease: false
+    - name: check dir
+      run: |
+        dir
+        dir ./Electron
     - uses: vimtor/action-zip@v1.1
       with:
         files: ./Electron/out/MalicaisTwoer-win32-x64/
