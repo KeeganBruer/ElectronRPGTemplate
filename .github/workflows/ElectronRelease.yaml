@@ -1,3 +1,4 @@
+name: 'Electron Release'
 on:
   workflow_dispatch:
     inputs:
