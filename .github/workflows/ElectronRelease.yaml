@@ -39,9 +39,8 @@ jobs:
         draft: false
         prerelease: false
     - uses: vimtor/action-zip@v1.1
-      working-directory: ./Electron
       with:
-        files: out/MalicaisTwoer-win32-x64/
+        files: ./Electron/out/MalicaisTwoer-win32-x64/
         dest: ./Windows.zip
     - name: Upload Release Asset
       id: upload-release-asset 
