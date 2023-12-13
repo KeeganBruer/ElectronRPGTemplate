@@ -18,9 +18,9 @@ jobs:
     - uses: actions/setup-node@master
       with:
         node-version: 14
-    - name: Change Directory
-      run: cd Electron
     - name: install dependencies
+      working-directory: ./Electron
       run: npm install
     - name: build
+      working-directory: ./Electron
       run: npm run make
