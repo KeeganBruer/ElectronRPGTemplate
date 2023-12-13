@@ -11,21 +11,14 @@ on:
         - macOS
 
 jobs:
-  test:
-    runs-on: ["${{ inputs.chosen-os }}"]
+  build_on_win:
+    runs-on: windows-latest
     steps:
-    - run: echo Hello world!
-    - name: version
-      run: echo "::set-output name=version::'1.0.0'"
-      id: version
-    - name: release
-      uses: actions/create-release@v1
-      id: create_release
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
       with:
-        draft: false
-        prerelease: false
-        release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
-        body_path: CHANGELOG.md
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+        node-version: 14
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run make
