@@ -1,11 +1,11 @@
 on:
   workflow_dispatch:
 jobs:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
 
       - name: build
-        run: make build
+        run: cd Electron && npm run package
       - name: version
         run: echo "::set-output name=version::$(./bin/azblogfilter --version)"
         id: version
