@@ -39,7 +39,7 @@ jobs:
         dir ./Electron
     - uses: vimtor/action-zip@v1.1
       with:
-        files: ./Electron/out/MalicaisTwoer-win32-x64/
+        files: ./Electron/out/Malicaistower-win32-x64/
         dest: ./Windows.zip
     - name: Upload Release Asset
       id: upload-release-asset 
