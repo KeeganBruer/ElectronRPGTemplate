@@ -7,6 +7,6 @@ export class FileManager {
 
     }
     getFile(name:string) {
-
+        console.log("File Manager, getting "+name)
     }
 }

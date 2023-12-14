@@ -68,7 +68,6 @@ export class GameEngine {
         }
         this.running = true;
         this.loop(0);
-        
     }
     resizeCanvas() {
         if (this.canvas == null) return;

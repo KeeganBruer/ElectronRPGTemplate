@@ -2,6 +2,7 @@ import {FileManager} from "../FileManager";
 import { GameEngine } from "../";
 import { AssetLoader } from "../AssetLoader";
 import PlayerGameObject from "../GameObject/player"
+import SpriteGameObject from "../GameObject/Sprite"
 import {GameObject} from "../GameObject"
 export class Level {
     Assets:AssetLoader
@@ -20,10 +21,7 @@ export class Level {
                 src:"public/background.png"
             }
         })
-        let player = new PlayerGameObject(this.engine)
-        player.position = {x: 175, y:995}
-        this.players.push(player)
-        this.GameObjects.push(player)
+        
     }
     async load() {
         let fileManger = new FileManager();
@@ -40,10 +38,7 @@ export class Level {
         }
     }
     render(ctx:CanvasRenderingContext2D) {
-        let background = this.Assets.getImageAsset("background");
-        let width = background.width
-        let height = background.height
-        ctx.drawImage(background, 0, 0, width, height)
+        
         for (let i = 0; i < this.GameObjects.length; i++) {
             this.GameObjects[i].render(ctx);
         }

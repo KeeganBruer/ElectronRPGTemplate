@@ -1,15 +1,16 @@
 import { GameEngine } from "./";
 import { Level } from "./Levels";
+import { Position } from "./Position";
 
 export class Camera {
     engine:GameEngine
-    position:{x:number, y:number} = {x:0, y:0};
-    target_position:{x:number, y:number} = {x:0, y:0};
+    position:Position = new Position({x:0, y:0});
+    target_position:Position = new Position({x:0, y:0});
     screen: { width: number; height: number; };
     constructor(engine:GameEngine) {
         this.engine = engine;
     }
-    setPosition(position?:{x:number, y:number}) {
+    setPosition(position?:Position) {
         if (position == undefined) return;
         this.position = position
     }
@@ -22,7 +23,7 @@ export class Camera {
             let y = ySum.sum / ySum.count
             x -= this.screen.width / 2
             y -= this.screen.height * (2/3)
-            return {x, y}
+            return new Position({x, y})
         }
         if (_level) {
             return getAveragePlayerPosition(_level)
@@ -34,7 +35,9 @@ export class Camera {
     }
     update() {
         this.target_position = this.calculateTargetPosition() || this.target_position;
-        let camera_speed = 2.5;
+        let distance = this.position.getDistance(this.target_position)
+        if (distance < 100) return;
+        let camera_speed = distance/100;
         if (this.position.x < this.target_position.x)
             this.position.x += camera_speed
         if (this.position.x > this.target_position.x)

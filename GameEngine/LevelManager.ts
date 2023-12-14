@@ -1,5 +1,6 @@
 import { GameEngine } from "./"
 import { Level } from "./Levels"
+import { LevelCreator } from "./Levels/levelCreator"
 
 export class LevelManager {
     engine:GameEngine
@@ -12,7 +13,7 @@ export class LevelManager {
         
     }
     async setLevel(levelName:string) {
-        let nextLevel = new Level(this.engine, this.save_name, levelName);
+        let nextLevel = new LevelCreator(this.engine, this.save_name, levelName);
         await nextLevel.load();
         this.engine.Camera.setPosition(
             this.engine.Camera.calculateTargetPosition(nextLevel)
