@@ -27,11 +27,16 @@ export class GameEngine {
         app_path:"",
         type:"resume",
     }
+    next_gameobject_id: number = 0;
     constructor() {
         this.Camera = new Camera(this);
         this.SavesManager = new SavesManager(this);
         this.MainMenu = new MainMenu(this);
         this.resizeCanvas = this.resizeCanvas.bind(this)
+    }
+    getUUID() {
+        this.next_gameobject_id += 1
+        return this.next_gameobject_id
     }
     setConfigs(config:Partial<LaunchConfigs>) {
         this.config = {

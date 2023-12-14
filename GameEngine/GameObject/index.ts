@@ -3,7 +3,7 @@ import { Level } from "../Levels";
 import { Position } from "../Position";
 
 export class GameObject {
-    id:string
+    id:number
     engine:GameEngine
     level:Level
     position:Position = new Position({x:0, y:0});
@@ -11,7 +11,7 @@ export class GameObject {
     acceleration:Position = new Position({x:0, y:0});
     has_gavity:boolean = false;
     constructor(engine:GameEngine, level:Level) {
-        this.id = crypto.randomUUID()
+        this.id = engine.getUUID();
         this.engine = engine
         this.level = level
     }
