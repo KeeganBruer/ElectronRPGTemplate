@@ -15,12 +15,11 @@ export class GameObject {
         this.engine = engine
         this.level = level
     }
-    update(cb?:Function) {
+    update() {
         this.acceleration = new Position({x:0, y:0});
         if (this.has_gavity == true) {
             this.acceleration.y = 1
         }
-        if (cb) cb();
         //physic calculations
 
         //acceleration 

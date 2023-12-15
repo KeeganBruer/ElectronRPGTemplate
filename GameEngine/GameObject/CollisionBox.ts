@@ -11,7 +11,7 @@ export default class CollidableGameObject extends GameObject {
     }
     isColliding(object:GameObject, pos?:Position) {
         //@ts-expect-error
-        if (!object.isColliding) return;
+        if (!object.isColliding) return {colliding:false};
         let Collidable = object as CollidableGameObject;
 
         let wBounds = this.getWorldBounds(pos);

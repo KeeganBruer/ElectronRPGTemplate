@@ -37,7 +37,9 @@ export class Camera {
         this.target_position = this.calculateTargetPosition() || this.target_position;
         let distance = this.position.getDistance(this.target_position)
         if (distance < 100) return;
-        let camera_speed = distance/100;
+      
+        let camera_speed = map(distance, 100, 500, 0.1, 50)
+        console.log(distance, camera_speed)
         if (this.position.x < this.target_position.x)
             this.position.x += camera_speed
         if (this.position.x > this.target_position.x)
@@ -56,3 +58,12 @@ export class Camera {
     }
     
 }
+
+export function clamp(input: number, min: number, max: number): number {
+    return input < min ? min : input > max ? max : input;
+  }
+  
+  export function map(current: number, in_min: number, in_max: number, out_min: number, out_max: number): number {
+    const mapped: number = ((current - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+    return clamp(mapped, out_min, out_max);
+  }

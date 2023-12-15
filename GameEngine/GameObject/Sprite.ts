@@ -11,9 +11,7 @@ export default class Player extends GameObject {
         this.asset_name = asset_name;
     }
     update() {
-        super.update(()=>{
-            
-        })
+        
     }
     render(ctx: CanvasRenderingContext2D): void {
         let background = this.Assets.getImageAsset(this.asset_name);
