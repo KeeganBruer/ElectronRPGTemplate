@@ -3,15 +3,19 @@ import { GameEngine } from "../";
 import { Level } from "../Levels";
 import { AssetLoader } from "../AssetLoader";
 import { Box, Position } from "../Position";
+export const CollidableTYPE = "CollidableGameObject"
+
 export default class CollidableGameObject extends GameObject {
     box: Box
+    passThrough:boolean = false;
     constructor(engine:GameEngine, level:Level, box:Box) {
         super(engine, level);
+        this.type.push(CollidableTYPE);
         this.box = box;
     }
     isColliding(object:GameObject, pos?:Position) {
-        //@ts-expect-error
-        if (!object.isColliding) return {colliding:false};
+        if (!object.type.includes(CollidableTYPE)) return {colliding:false};
+        //@ts-ignore
         let Collidable = object as CollidableGameObject;
 
         let wBounds = this.getWorldBounds(pos);
@@ -36,5 +40,10 @@ export default class CollidableGameObject extends GameObject {
         ctx.fillStyle = "red"
         let wBounds = this.getWorldBounds();
         ctx.fillRect(wBounds.x, wBounds.y, wBounds.width, wBounds.height)
+    }
+    toJSON() {
+        return {
+            ...super.toJSON(),
+        }
     }
 }

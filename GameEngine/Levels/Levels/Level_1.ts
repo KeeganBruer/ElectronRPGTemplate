@@ -1,15 +1,15 @@
-import { GameEngine } from "..";
-import { AssetLoader } from "../AssetLoader";
-import { Level } from "./";
-import PlayerGameObject from "../GameObject/player"
-import SpriteGameObject from "../GameObject/Sprite"
-import {GameObject} from "../GameObject"
-import { Box, Position } from "../Position";
-import CollidableGameObject from "../GameObject/Collidable";
-import Interactable from "../GameObject/Interactable";
-import LevelDoor from "../GameObject/LevelDoor";
+import { GameEngine } from "../../";
+import { AssetLoader } from "../../AssetLoader";
+import { Level } from "../";
+import PlayerGameObject from "../../GameObject/player"
+import SpriteGameObject from "../../GameObject/Sprite"
+import {GameObject} from "../../GameObject"
+import { Box, Position } from "../../Position";
+import CollidableGameObject from "../../GameObject/Collidable";
+import Interactable from "../../GameObject/Interactable";
+import LevelDoor from "../../GameObject/LevelDoor";
 
-export class LevelCreator extends Level {
+export default class Level_Constructor extends Level {
     constructor(engine:GameEngine, save_name:string, levelName:string) {
         super(engine, save_name, levelName);
         this.Assets = new AssetLoader(engine, {
@@ -51,13 +51,13 @@ export class LevelCreator extends Level {
             height:20,
         }))
         platform.position = new Position({x: 300, y:950},)
-        let door1 = new LevelDoor(this.engine, this, new Box({
+        let door4 = new LevelDoor(this.engine, this, new Box({
             x:-50,
             y:-100,
             width:100,
             height:100,
-        }), "Level2")
-        door1.position = new Position({x: 1600, y:1100},)
+        }), "Level_2")
+        door4.position = new Position({x: 1600, y:1100},)
         
         //render order
         this.GameObjects.push(background)
@@ -65,7 +65,7 @@ export class LevelCreator extends Level {
         this.GameObjects.push(wall_right)
         this.GameObjects.push(ground)
         this.GameObjects.push(platform)
-        this.GameObjects.push(door1)
+        this.GameObjects.push(door4)
         this.GameObjects.push(player)
     }
 }

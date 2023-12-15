@@ -10,7 +10,7 @@ export class SavesManager {
         this.LevelManager = undefined;
     }
     async createNewSave() {
-        this.currentSave = "new_game"
+        this.currentSave = `save_${this.engine.getUUID()}`
         this.LevelManager = new LevelManager(this.engine, this.currentSave)
         await this.LevelManager.setLevel("Level_1")
         
@@ -24,6 +24,7 @@ export class SavesManager {
     }
     async saveCurrentGame() {
         console.log("saving ", this.currentSave)
+        this.LevelManager?.saveCurrentLevel();
     }
     getLevelManager() {
         return this.LevelManager;

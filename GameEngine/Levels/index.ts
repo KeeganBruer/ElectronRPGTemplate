@@ -9,7 +9,6 @@ export class Level {
     engine:GameEngine
     save_name:string
     levelName:string
-    stating_camera_position:{x:number, y:number};
     players:PlayerGameObject[] = []
     GameObjects:GameObject[] = []
     constructor(engine:GameEngine, save_name:string, levelName:string) {
@@ -28,8 +27,20 @@ export class Level {
         
         fileManger.getFile(`/saves/${this.save_name}/levels/${this.levelName}/assets.json`);
 
-        await this.Assets.waitForLoad();
+        await this.Assets.loadAssets();
         console.log(this.Assets.assets)
+
+    }
+    save() {
+        let fileManger = new FileManager();
+        let LevelJSON = {
+            GameObjects:this.GameObjects.map(obj=>obj.toJSON())
+        }
+        
+        fileManger.saveToFile(
+            `/saves/${this.save_name}/levels/${this.levelName}/assets.json`,
+            LevelJSON
+        );
 
     }
     update() {

@@ -22,22 +22,21 @@ export class AssetLoader {
         this.assets = {};
         this.assetDetails = assetDetails;
     }
-    loadAssets(assetDetails:{
-        [key:string]:{
-            src:string
-        }
-    }) {
+    async loadAssets() {
         const path = window.require("path")
         const app_path = this.engine.config.app_path
         console.log(app_path)
-        let keys = Object.keys(assetDetails);
+        let keys = Object.keys(this.assetDetails);
+        let loadPromises:Promise<void>[] = []
         for (let i = 0; i < keys.length; i++) {
-            let details = assetDetails[keys[i]];
+            let details = this.assetDetails[keys[i]];
             
             let img = new Image();
-            img.onload = ()=>{
-                this.assets[keys[i]].isLoaded = true;
-            }
+            loadPromises.push(new Promise((resolve)=>{
+                img.onload = ()=>{
+                    resolve()
+                }
+            }))
             img.src = app_path.includes("http://") ? `${app_path}/${details.src}` : path.join(app_path, "../", details.src);
             console.log("Loading image",  img.src)
             this.assets[keys[i]] = {
@@ -45,6 +44,7 @@ export class AssetLoader {
                 image:img
             }
         }
+        await Promise.all(loadPromises);
     }
     isLoaded() {
         let keys = Object.keys(this.assets);
@@ -53,14 +53,7 @@ export class AssetLoader {
         }
         return true;
     }
-    waitForLoad() {
-        this.loadAssets(this.assetDetails)
-        return new Promise<void>((resolve)=>{
-            setTimeout(()=>{
-                if (this.isLoaded() == true) resolve()
-            }, 100)
-        })
-    }
+    
     getImageAsset(assetName:string) {
         return this.assets[assetName].image
     }

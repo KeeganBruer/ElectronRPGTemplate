@@ -28,6 +28,7 @@ export class GameEngine {
         type:"resume",
     }
     next_gameobject_id: number = 0;
+    frame_time:number = 0;
     constructor() {
         this.Camera = new Camera(this);
         this.SavesManager = new SavesManager(this);
@@ -113,22 +114,30 @@ export class GameEngine {
         })
     }
     loop(deltaTime:number) {
-        if (this.container == undefined) return;
-        this.container.focus();
-        if (this.ctx == null) return;
-        this.ctx.fillStyle = "black"
-        this.ctx.fillRect(0, 0, this.Camera.screen.width, this.Camera.screen.height)
-        this.SavesManager.useLevelManager((levels)=>{
-            
-            let level = levels.getCurrentLevel();
-            
-            //update
-            level.update();
-            this.Camera.update();
+        this.frame_time += deltaTime;
+        
+        (()=>{ //draw rendering
+            if (this.frame_time < 1000/60) return;
+            this.frame_time = 0;
+
+            if (this.container == undefined) return;
+
+            this.container.focus();
             if (this.ctx == null) return;
-            //render
-            this.Camera.useCameraPosition(this.ctx, level.render.bind(level))
-        })
+            this.ctx.fillStyle = "black"
+            this.ctx.fillRect(0, 0, this.Camera.screen.width, this.Camera.screen.height)
+            this.SavesManager.useLevelManager((levels)=>{
+                
+                let level = levels.getCurrentLevel();
+                
+                //update
+                level.update();
+                this.Camera.update();
+                if (this.ctx == null) return;
+                //render
+                this.Camera.useCameraPosition(this.ctx, level.render.bind(level))
+            })
+        })()
         if (this.running) window.requestAnimationFrame(this.loop.bind(this))
     }
 

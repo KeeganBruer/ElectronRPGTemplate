@@ -1,24 +1,25 @@
-import { GameEngine } from "..";
-import { AssetLoader } from "../AssetLoader";
-import { Level } from "./";
-import PlayerGameObject from "../GameObject/player"
-import SpriteGameObject from "../GameObject/Sprite"
-import {GameObject} from "../GameObject"
-import { Box, Position } from "../Position";
-import CollidableGameObject from "../GameObject/Collidable";
-import Interactable from "../GameObject/Interactable";
-import LevelDoor from "../GameObject/LevelDoor";
+import { GameEngine } from "../../";
+import { AssetLoader } from "../../AssetLoader";
+import { Level } from "../";
+import PlayerGameObject from "../../GameObject/player"
+import SpriteGameObject from "../../GameObject/Sprite"
+import {GameObject} from "../../GameObject"
+import { Box, Position } from "../../Position";
+import CollidableGameObject from "../../GameObject/Collidable";
+import Interactable from "../../GameObject/Interactable";
+import LevelDoor from "../../GameObject/LevelDoor";
 
-export class LevelCreator extends Level {
+export default class Level_Constructor extends Level {
     constructor(engine:GameEngine, save_name:string, levelName:string) {
         super(engine, save_name, levelName);
         this.Assets = new AssetLoader(engine, {
             "background":{
-                src:"public/background.png"
+                src:"public/rampstairs.png"
             }
         })
         let player = new PlayerGameObject(this.engine, this)
         player.position = new Position({x: 40, y:950})
+        player.interaction_cooldown = 30;
         this.players.push(player)
         let background = new SpriteGameObject(this.engine, this, "background")
         background.position = new Position({x: 0, y:0})
@@ -56,8 +57,8 @@ export class LevelCreator extends Level {
             y:-100,
             width:100,
             height:100,
-        }), "Level2")
-        door1.position = new Position({x: 1600, y:1100},)
+        }), "Level_1")
+        door1.position = new Position({x: 50, y:1100},)
         
         //render order
         this.GameObjects.push(background)

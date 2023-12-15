@@ -9,4 +9,8 @@ export class FileManager {
     getFile(name:string) {
         console.log("File Manager, getting "+name)
     }
+    saveToFile(name:string, content:any) {
+        console.log("File Manager, saving file "+name, content)
+    }
+    
 }

@@ -31,6 +31,21 @@ export class Position {
     getDistance(pos:Position) {
         return Math.sqrt(Math.pow(pos.x - this.x, 2) + Math.pow(pos.y - this.y, 2))
     }
+    normalize() {
+        let x = this.x / Math.abs(this.x)
+        let y = this.y / Math.abs(this.y)
+        return new Position({x, y})
+    }
+    scale(times: number | {x:number, y:number}) {
+        let xtimes = typeof times == "number" ? times : times.x
+        let ytimes = typeof times == "number" ? times : times.y
+        let x = this.x * xtimes
+        let y = this.y * ytimes
+        return new Position({x, y})
+    }
+    json() {
+        return {x:this.x, y:this.y}
+    }
 }
 
 export class Box {

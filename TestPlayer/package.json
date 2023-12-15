@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "cp -r ../GameEngine ./src",
     "build": "tsc",
-    "build-run":"npm run build && node server.js",
+    "build-run":"npm run prebuild && npm run build && node server.js",
     "start":"nodemon --watch ../GameEngine -e js,ts,tsx --exec 'npm run build-run'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

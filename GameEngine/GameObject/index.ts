@@ -1,9 +1,11 @@
 import { GameEngine } from "../";
 import { Level } from "../Levels";
 import { Position } from "../Position";
+export const BaseTYPE = "BaseGameObject"
 
 export class GameObject {
     id:number
+    type:string[] = []
     engine:GameEngine
     level:Level
     position:Position = new Position({x:0, y:0});
@@ -12,6 +14,7 @@ export class GameObject {
     has_gavity:boolean = false;
     constructor(engine:GameEngine, level:Level) {
         this.id = engine.getUUID();
+        this.type.push(BaseTYPE)
         this.engine = engine
         this.level = level
     }
@@ -33,5 +36,12 @@ export class GameObject {
     render(ctx:CanvasRenderingContext2D) {
         ctx.fillStyle = "red"
         ctx.fillRect(this.position.x, this.position.y, 100, 100)
+    }
+    toJSON() {
+        return {
+            type:this.type,
+            position:this.position.json(),
+            has_gavity:this.has_gavity
+        }
     }
 }
