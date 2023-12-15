@@ -6,6 +6,8 @@ import { Box, Position } from "../Position";
 export default class Player extends CollidableGameObject {
     speed:number
     controled_velocity:Position = new Position()
+    jump_count: number = 0
+    jump_available:boolean = true;
     constructor(engine:GameEngine, level:Level) {
         super(engine, level, new Box({
             x: 0,
@@ -23,9 +25,14 @@ export default class Player extends CollidableGameObject {
         }
 
         this.velocity = this.velocity.add(this.acceleration)
-        if (this.engine.KeyboardMouse.keysDown.includes("w")) {
-            this.velocity.y = -15
-        }
+        if (this.engine.KeyboardMouse.keysDown.includes("w") && this.jump_available && this.jump_count < 2) {
+            this.jump_available = false;
+            this.velocity.y = -20
+            this.jump_count += 1;
+            console.log(this.jump_count)
+        } else if (!this.engine.KeyboardMouse.keysDown.includes("w"))
+            this.jump_available = true;
+        
         if (this.engine.KeyboardMouse.keysDown.includes("a") && this.velocity.x > -5) {
             this.velocity.x -= 1
         }
@@ -51,7 +58,10 @@ export default class Player extends CollidableGameObject {
         } else {
             if (!does_collide_x && this.velocity.x != 0) {
                 let dir = this.velocity.x / Math.abs(this.velocity.x)
-                this.velocity.x -= dir * 0.1
+                this.velocity.x -= dir * 0.5
+            }
+            if (this.velocity.y > 0) {
+                this.jump_count = 0;
             }
             this.velocity.y = 0
             this.acceleration.y = 0

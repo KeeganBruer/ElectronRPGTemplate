@@ -38,7 +38,7 @@ export class Camera {
         let distance = this.position.getDistance(this.target_position)
         if (distance < 100) return;
       
-        let camera_speed = map(distance, 100, 500, 0.1, 50)
+        let camera_speed = map(distance, 100, 1000, 0.1, 60)
         console.log(distance, camera_speed)
         if (this.position.x < this.target_position.x)
             this.position.x += camera_speed
